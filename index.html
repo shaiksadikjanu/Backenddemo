@@ -1,14 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Janu – Julu Demo App</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Janu’s Gemini Chatbot</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+    #chat {
+      width: 100%;
+      height: 350px;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+    }
+    input {
+      width: 75%;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 11px 20px;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Janu ❤️ Julu Backend Demo</h1>
-  <button onclick="callAPI()">Call Backend API</button>
-  <p id="output"></p>
+  <h2>Gemini AI Chatbot for My Janu ❤️</h2>
 
-  <script src="script.js"></script>
+  <div id="chat"></div>
+
+  <input id="msg" placeholder="Type your message..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    function addToChat(role, text) {
+      const chat = document.getElementById("chat");
+      chat.innerHTML += `<b>${role}:</b> ${text}<br><br>`;
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const message = document.getElementById("msg").value;
+      if (!message) return;
+
+      addToChat("You", message);
+      document.getElementById("msg").value = "";
+
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await res.json();
+      addToChat("Gemini", data.reply);
+    }
+  </script>
 </body>
 </html>
