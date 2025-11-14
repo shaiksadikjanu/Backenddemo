@@ -10,7 +10,7 @@ app.post("/api/chat", async (req, res) => {
     const userMessage = req.body.message;
 
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyDPMkL6AV0S3oxrLJVeuS-hpw1swb92gT4",
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyDPMkL6AV0S3oxrLJVeuS-hpw1swb92gT4",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
